@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'WebServer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cake',
-        'USER': 'root',
+        'NAME': 'ivirgil7',
+        'USER': 'tracy19900412',
         'PASSWORD': 'root',
-        'HOST': '127.0.0.1',
+        'HOST': 'ivirgil7.mysql.pythonanywhere-services.com',
         'PORT': '3306',
         'OPTIONS': {'charset':'utf8mb4'}
     }
