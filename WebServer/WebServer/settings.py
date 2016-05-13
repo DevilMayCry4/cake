@@ -79,9 +79,9 @@ WSGI_APPLICATION = 'WebServer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ivirgil7',
-        'USER': 'tracy19900412',
-        'PASSWORD': 'root',
+        'NAME': 'cake',
+        'USER': 'ivirgil7',
+        'PASSWORD': 'tracy19900412',
         'HOST': 'ivirgil7.mysql.pythonanywhere-services.com',
         'PORT': '3306',
         'OPTIONS': {'charset':'utf8mb4'}
