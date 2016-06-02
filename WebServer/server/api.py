@@ -9,7 +9,6 @@ from server.models import UserTokens
 from server.models import banner,Order
 from django.http import JsonResponse
 from django.core import serializers
-import pingpp
 import time
 import os
 
