@@ -1,43 +1,93 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" charset="utf-8" />
-   <title></title>
+{% extends "template.html" %}
+{% block title %}添加商品{% endblock %}
+{% block head %}
     {% load staticfiles %}
-   <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
-    <script src="{% static "js/jquery-2.2.3.min.js" %}" ></script>
-    <script src="{% static "js/bootstrap.min.js" %}"></script>
-    <link href="{% static "css/modalcenter.css" %}" rel="stylesheet">
-    <script src="{% static "js/commond.js" %}"></script>
-    <script>function show(){
-        alertWithTitleAndBody('title','body');
-    }</script>
-</head>
-<body>
-<!-- 模态框（Modal） -->
-<div class="modal fade" id="alertModel" tabindex="-1" role="dialog"
-   aria-labelledby="myModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-      <div class="modal-content">
-         <div class="modal-header">
-            <button type="button" class="close"
-               data-dismiss="modal" aria-hidden="true">
-                  &times;
-            </button>
-            <h4 class="modal-title" id="alertModelTitle">
-            </h4>
-         </div>
-         <div id="alertModelBody" class="modal-body">
-         </div>
-         <div class="modal-footer">
-            <button type="button" class="btn btn-default"
-               data-dismiss="modal">关闭
-            </button>
-         </div>
-      </div><!-- /.modal-content -->
-</div><!-- /.modal -->
-</div>
-<button onclick="show()">show</button>
-</body>
-</html>
+    <link href="{% static "css/fileinput.min.css" %}" rel="stylesheet">
+    <script src="{% static "js/fileinput.min.js" %}"></script>
+    <script src="{% static "js/fileinput_locale_zh.js" %}"></script>
+    <style>
+    textarea{
+        height: 2px;
+}
+    </style>
+    <script>
+    function expandTextarea(id) {
+    var element = $('#input_descrption').get(0);
 
+    element.addEventListener('keyup', function() {
+        this.style.overflow = 'hidden';
+        this.style.height = 0;
+        this.style.height = this.scrollHeight + 'px';
+    }, false);
+}
+
+    </script>
+   {% endblock %}
+{% block body %}
+
+ <div class="container">
+    <label class="control-label">商品标题</label>
+    <input type="text" class="form-control" placeholder="标题" id="input_title">
+          <br>
+     <label class="control-label">商品价格</label>
+    <input type="text" class="form-control" placeholder="价格" id="input_price"  >
+       <br>
+     <label class="control-label">商品描述</label>
+    <textarea type="text" class="form-control" placeholder="描述" id="input_descrption"  ></textarea>
+  <br>
+<label class="control-label">选择图片</label>
+<input id="input" type="file"  type="file" multiple class="file-loading">
+
+<script>
+    $("#input").fileinput({
+    language: "zh",
+    uploadUrl: "addgood",
+    uploadAsync:false,
+    allowedFileExtensions: ["jpg", "png", "gif","jpeg"],
+        uploadExtraData: function() {  // callback example
+        var params = {};
+        params['title'] = $('#input_title').val();
+        params['des'] = $('#input_descrption').val();
+        params['price'] = $('#input_price').val();
+        params['token'] = Cookies.get('token');
+        return params;
+    }
+}).on('filebatchpreupload', function(event, data) {
+        var string = '';
+        if($('#input_descrption').val() == ''){
+            string = '请输入商品描述';
+        }
+        if(validateFloat($('#input_price').val())== false){
+            string  = "请输入正确的价格";
+        }
+         if($('#input_title').val() == ''){
+             string = "请输入标题";
+         }
+        if(string != ''){
+            return {
+            message: string, // upload error message
+            data:{} // any other data to send that can be referred in `filecustomerror`
+        };
+        }else{
+            showLoadingModal(true);
+        }
+
+}).on('filebatchuploadsuccess',function(event, data, previewId, index) {
+     showLoadingModal(false);
+    if(data.response.code == 0){
+        var msg = data.response.msg;
+        alertWithTitleAndBody('ss',msg);
+    }
+     else{
+       window.location.href = "..";
+    }
+}).on('filebatchuploaderror',function(event, data, msg) {
+     showLoadingModal(false);
+
+});
+    $(document).ready(function(){
+        expandTextarea();
+    });
+</script>
+    </div>
+{% endblock %}

@@ -24,7 +24,8 @@ from WebServer import settings
 from server.views import getBanners
 from server.api import deleteBanner
 from server.api import updateBanner
-from server.views import addGoodItem
+from server.views import addGoodItem,getGoodItem
+from server.api import appGetHome
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -37,6 +38,8 @@ urlpatterns = [
     url(r'^deletebanner/?$',deleteBanner),
     url(r'^updatebanner/?$',updateBanner),
     url(r'^addgood/?$',addGoodItem),
+    url(r'^gooditem/?$',getGoodItem),
+    url(r'^app/home/?$',appGetHome),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

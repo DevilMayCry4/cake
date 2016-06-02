@@ -1,0 +1,44 @@
+{% extends "template.html" %}
+{% block title %}商品{% endblock %}
+{% block head %}
+<style>      .div_img {
+
+   text-align:center;
+   padding: 5px;
+}
+img{
+   align-content: center;
+    width: 100%;
+}
+.title{
+    font-size: 30px;
+}
+.price{
+    font-size: 30px;
+    color: red;
+}
+.des{
+    font-size: 25px;
+}
+</style>
+{% endblock %}
+{% block body %}
+    <div class="container">
+   {% if item %}
+     <div class="title"><strong>商品名称：{{ item.title }}</strong></div>
+     <div  class="price">价格￥{{ item.price }}</div>
+
+        {% for img in item.imgs %}
+            <div class="div_img">
+            <img src={{img}} >
+            </div>
+        {% endfor %}
+
+       {% if item.des %}
+    <div class="des">{{ item.des }}</div>
+           {% endif %}
+    {% else %}
+       <div>找不到该商品</div>
+    {% endif %}
+    </div>
+{% endblock %}

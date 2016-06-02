@@ -45,6 +45,7 @@
 .btn-margin-right {
     margin-right: 20px;
 }
+     .pricelabel{color: red}
  </style>
 <script>
     function logout(){
@@ -55,6 +56,7 @@
 <body>
 
 <nav class="navbar navbar-default" role="navigation">
+<div class="container-fluid">
    <div class="nav navbar-nav navbar-right">
         {% if user %}
               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ user.nickname }}<b class="caret"></b></a>
@@ -73,6 +75,7 @@
       </a>
        {% endif %}
    </div>
+</div>
 </nav>
 
 {% if banners %}
@@ -116,37 +119,20 @@
 {% endif %}
 
 <br>
-   <div class="conainer" >
+   <div class="container-fluid" >
         <div class="row">
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            {% for item in items %}
+                 <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="col-sm-12 thumbnail text-center">
-                    <img alt="" class="img-responsive"  src="{% static "img/1.jpg" %}">
-
+                    <a href= "gooditem?id={{ item.id }}">
+                        <img alt="" class="img-responsive"  src={{ item.img}}>
                     <div class="caption">
-                        <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+                        <h4>{{ item.title }}</h4><div class="pricelabel">￥{{ item.price }}</div>
                     </div>
+                    </a>
                 </div>
             </div>
-
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="col-sm-12 thumbnail text-center">
-                    <img alt="" class="img-responsive"  src="{% static "img/2.jpg" %}">
-
-                    <div class="caption">
-                        <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="col-sm-12 thumbnail text-center">
-                    <img alt="" class="img-responsive"  src="{% static "img/3.jpg" %}">
-
-                    <div class="caption">
-                        <h4>Lorem ipsum dolor sit amet, consectetur</h4>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </body>
